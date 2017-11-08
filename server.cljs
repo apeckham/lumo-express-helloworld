@@ -20,7 +20,7 @@
                               (.goto page (file-url "page.html"))
                               (.screenshot page #js {:path "example.png"})))
                      (.then #(.close browser)))))
-        (.then #(.send res "hello world"))))))
+        (.then #(.sendFile res "example.png" #js {:root js/__dirname}))))))
 
 (doto (.createServer http #(app %1 %2))
   (.listen 3000))
