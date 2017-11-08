@@ -17,8 +17,9 @@
         (.then (fn [browser]
                  (-> (.newPage browser)
                      (.then (fn [page]
-                              (.goto page (file-url "page.html") #js {:waitUntil "networkidle0"})
-                              (.screenshot page #js {:path "example.png"})))
+                              (.setViewport page #js {:width 2000 :height 2000})
+                              (-> (.goto page (file-url "page.html") #js {:waitUntil "networkidle0"})
+                                  (.then #(.screenshot page #js {:path "example.png"})))))
                      (.then #(.close browser))
                      (.catch #(js/console.log %)))))
         (.then #(.sendFile res "example.png" #js {:root js/__dirname}))
