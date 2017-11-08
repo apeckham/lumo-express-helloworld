@@ -6,7 +6,6 @@
   "dependencies": {
     "express": "^4.16.2",
     "file-url": "^2.0.2",
-    "puppeteer": "^0.12.0",
-    "q": "^1.5.1"
+    "puppeteer": "https://github.com/GoogleChrome/puppeteer.git#7d18275"
   }
 }

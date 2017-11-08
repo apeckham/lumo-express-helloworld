@@ -17,10 +17,12 @@
         (.then (fn [browser]
                  (-> (.newPage browser)
                      (.then (fn [page]
-                              (.goto page (file-url "page.html"))
+                              (.goto page (file-url "page.html") #js {:waitUntil "networkidle0"})
                               (.screenshot page #js {:path "example.png"})))
-                     (.then #(.close browser)))))
-        (.then #(.sendFile res "example.png" #js {:root js/__dirname}))))))
+                     (.then #(.close browser))
+                     (.catch #(js/console.log %)))))
+        (.then #(.sendFile res "example.png" #js {:root js/__dirname}))
+        (.catch #(js/console.log %))))))
 
 (doto (.createServer http #(app %1 %2))
   (.listen 3000))
