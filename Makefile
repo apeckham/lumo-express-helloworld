@@ -1,0 +1,2 @@
+default:
+	lumo server.cljs
