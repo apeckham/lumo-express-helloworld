@@ -10,3 +10,5 @@
                           (.goto page "https://example.com/")
                           (.screenshot page #js {:path "example.png"})))
                  (.then #(.close browser))))))
+
+#_(-> (.launch puppeteer) (.then #(.newPage %)) (.then #(do (.goto % "http://example.com")) (.screenshot % #js {:path "example.png"})))
