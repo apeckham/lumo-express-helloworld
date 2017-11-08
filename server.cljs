@@ -7,9 +7,20 @@
 
 (def app (express))
 
+(.setFlagsFromString (js/require "v8") "--no-use_strict")
+(defonce puppeteer (js/require "puppeteer"))
+(defonce file-url (js/require "file-url"))
+
 (. app (get "/hello"
   (fn [req res]
-    (.send res "hello world"))))
+    (-> (.launch puppeteer)
+        (.then (fn [browser]
+                 (-> (.newPage browser)
+                     (.then (fn [page]
+                              (.goto page (file-url "page.html"))
+                              (.screenshot page #js {:path "example.png"})))
+                     (.then #(.close browser)))))
+        (.then #(.send res "hello world"))))))
 
 (doto (.createServer http #(app %1 %2))
   (.listen 3000))
